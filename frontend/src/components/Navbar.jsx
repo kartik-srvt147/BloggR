@@ -24,9 +24,11 @@ const Navbar = () => {
 
       {/* Sign In */}
       <div>
-        <Button className="flex items-center gap-0.5 bg-teal-600 hover:bg-teal-500 text-gray-100 transition px-3">
-          <IoLogIn className="text-base" />
-          <Link to="/login">Sign In</Link>
+        <Button className="bg-teal-600 hover:bg-teal-500 text-gray-100 transition px-3">
+          <Link to="/login" className="flex items-center gap-0.5 ">
+            <IoLogIn className="text-base" />
+            Sign In
+          </Link>
         </Button>
       </div>
     </div>
