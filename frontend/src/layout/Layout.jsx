@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex flex-col bg-gray-950 text-gray-100">
+      <div className="min-h-screen flex flex-col bg-gray-950 text-gray-100 w-full">
         {/* Navbar (fixed height, z-indexed) */}
         <Navbar />
 
@@ -20,12 +20,12 @@ const Layout = () => {
           </div>
 
           {/* Main Content + Footer */}
-          <div className="flex-1 flex flex-col bg-gray-950">
-            <main className="flex-1 p-4 bg-gray-950">
+          <div className="w-full flex flex-col">
+            <main className="min-h-[93%] p-4 bg-sky-950">
               <Outlet />
             </main>
 
-            <Footer className="w-full bg-gray-900 border-t border-teal-800 py-3 text-center text-sm text-gray-400" />
+            <Footer className="w-full bg-gray-900 border-t border-teal-800 py-2 text-center text-sm text-gray-400" />
           </div>
         </div>
       </div>
