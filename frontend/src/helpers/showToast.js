@@ -15,9 +15,9 @@ export const showToast = (type, message) => {
   if (type === "success") {
     toast.success(message, config);
   } else if (type === "error") {
-    toast.success(message, config);
+    toast.error(message, config);
   } else if (type === "info") {
-    toast.success(message, config);
+    toast.info(message, config);
   } else {
     toast(message, config);
   }
