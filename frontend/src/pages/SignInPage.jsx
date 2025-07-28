@@ -16,6 +16,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { showToast } from "@/helpers/showToast";
 import { axiosInstance } from "@/lib/axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/user/user.slice";
+import GoogleLogin from "@/components/GoogleLogin";
 
 const formSchema = z.object({
   email: z.email("Invalid email address"),
@@ -48,6 +51,7 @@ const childVariants = {
 };
 
 const SignInPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -65,6 +69,12 @@ const SignInPage = () => {
       });
 
       showToast("success", response.data.message);
+      dispatch(
+        setUser({
+          email: values.email,
+          password: values.password,
+        })
+      );
       navigate("/index");
     } catch (error) {
       const message =
@@ -162,6 +172,9 @@ const SignInPage = () => {
                 >
                   Sign In
                 </Button>
+                <div>
+                  <GoogleLogin />
+                </div>
 
                 <p className="text-sm text-center text-gray-400">
                   Don&apos;t have an account?{" "}

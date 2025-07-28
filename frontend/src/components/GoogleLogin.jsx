@@ -6,8 +6,11 @@ import { auth, provider } from "@/lib/firebase";
 import { showToast } from "@/helpers/showToast";
 import { axiosInstance } from "@/lib/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/user/user.slice";
 
 const GoogleLogin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async () => {
     try {
@@ -19,6 +22,13 @@ const GoogleLogin = () => {
       });
 
       showToast("success", response.data.message);
+      dispatch(
+        setUser({
+          name: googleResponse.user.displayName,
+          email: googleResponse.user.email,
+          profilePic: googleResponse.user.photoURL,
+        })
+      );
       navigate("/index");
     } catch (error) {
       const message =
