@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { axiosInstance } from "@/lib/axios";
 import { showToast } from "@/helpers/showToast";
+import GoogleLogin from "@/components/GoogleLogin";
 
 // 🔐 Validation schema
 const formSchema = z
@@ -228,6 +229,9 @@ const SignUpPage = () => {
                 >
                   Sign Up
                 </Button>
+                <div>
+                  <GoogleLogin />
+                </div>
 
                 <p className="text-sm text-center text-gray-400">
                   Already have an account?{" "}

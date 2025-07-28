@@ -69,3 +69,36 @@ export const login = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const GoogleLogin = async (req, res) => {
+  const { name, email, profilePic } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      // create new user
+      const password = Math.round(Math.random() * 10000000).toString();
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const newUser = new User({
+        name,
+        email,
+        password: hashedPassword,
+        profilePic,
+      });
+
+      user = await newUser.save();
+    }
+
+    generateToken(user._id, res);
+
+    res.status(200).json({
+      message: "Google Login Successful",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } catch (error) {
+    console.log("Error in google login controller", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
