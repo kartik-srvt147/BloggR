@@ -75,7 +75,7 @@ const SignInPage = () => {
           password: values.password,
         })
       );
-      navigate("/index");
+      navigate("/");
     } catch (error) {
       const message =
         error.response.data.message ||

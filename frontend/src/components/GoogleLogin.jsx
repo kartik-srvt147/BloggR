@@ -29,7 +29,7 @@ const GoogleLogin = () => {
           profilePic: googleResponse.user.photoURL,
         })
       );
-      navigate("/index");
+      navigate("/");
     } catch (error) {
       const message =
         error.response.data.message ||
