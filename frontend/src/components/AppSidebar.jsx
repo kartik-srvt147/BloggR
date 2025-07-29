@@ -92,11 +92,6 @@ const AppSidebar = () => {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-
-      {/* Sidebar Footer */}
-      {/* <SidebarFooter >
-        © 2025 BloggR
-      </SidebarFooter> */}
     </Sidebar>
   );
 };
