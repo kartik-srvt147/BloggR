@@ -1,9 +1,9 @@
 import logo from "@/assets/images/logo.png";
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoLogIn } from "react-icons/io5";
 import SearchBox from "./SearchBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,10 +19,31 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import DropdownAnimation from "@/components/DropdownAnimation";
 import { useState } from "react";
+import { showToast } from "@/helpers/showToast";
+import { axiosInstance } from "@/lib/axios";
+import { removeUser } from "@/redux/user/user.slice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // handleLogout
+  const handleLogout = async () => {
+    try {
+      const response = await axiosInstance.post("/auth/logout", {});
+
+      dispatch(removeUser());
+      showToast("success", response.data.message);
+      navigate("/");
+    } catch (error) {
+      const message =
+        error.response.data.message ||
+        "Something went wrong. Please try again.";
+      showToast("error", message);
+    }
+  };
 
   return (
     <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-gray-900 px-6 border-b border-teal-800 shadow-sm">
@@ -71,7 +92,7 @@ const Navbar = () => {
                 <DropdownMenuItem asChild>
                   <Link
                     to=""
-                    className="flex items-center gap-2 hover:bg-gray-700 px-3 py-2 rounded-md transition"
+                    className="flex items-center gap-2 px-3 py-2 rounded-md transition hover:bg-gray-700"
                   >
                     <FaUser className="text-teal-400 size-4" />
                     Profile
@@ -81,7 +102,7 @@ const Navbar = () => {
                 <DropdownMenuItem asChild>
                   <Link
                     to=""
-                    className="flex items-center gap-2 hover:bg-gray-700 px-3 py-2 rounded-md transition"
+                    className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-700 transition"
                   >
                     <MdOutlinePlaylistAdd className="text-teal-400 size-5" />
                     Create Blog
@@ -91,13 +112,13 @@ const Navbar = () => {
                 <DropdownMenuSeparator className="bg-teal-700" />
 
                 <DropdownMenuItem asChild>
-                  <Link
-                    to=""
-                    className="flex items-center gap-2 hover:bg-gray-700 px-3 py-2 rounded-md transition"
+                  <Button
+                    onClick={handleLogout}
+                    className="w-full bg-gray-800 hover:bg-gray-700"
                   >
-                    <IoLogOut className="text-teal-400" />
+                    <IoLogOut className="text-red-500/75" />
                     Logout
-                  </Link>
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownAnimation>
