@@ -60,9 +60,12 @@ export const login = async (req, res) => {
 
     generateToken(user._id, res);
     res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
@@ -93,9 +96,12 @@ export const GoogleLogin = async (req, res) => {
 
     res.status(200).json({
       message: "Google Login Successful",
-      _id: user._id,
-      name: user.name,
-      email: user.email,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        profilePic: user.profilePic,
+      },
     });
   } catch (error) {
     console.log("Error in google login controller", error.message);
