@@ -22,13 +22,7 @@ const GoogleLogin = () => {
       });
 
       showToast("success", response.data.message);
-      dispatch(
-        setUser({
-          name: googleResponse.user.displayName,
-          email: googleResponse.user.email,
-          profilePic: googleResponse.user.photoURL,
-        })
-      );
+      dispatch(setUser(response.data.user));
       navigate("/");
     } catch (error) {
       const message =

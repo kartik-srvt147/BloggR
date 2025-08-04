@@ -21,11 +21,11 @@ const Layout = () => {
 
           {/* Main Content + Footer */}
           <div className="w-full flex flex-col">
-            <main className="min-h-[93%] p-4 bg-sky-950">
+            <main className="min-h-[93%] p-4 bg-gray-950">
               <Outlet />
             </main>
 
-            <Footer className="w-full bg-gray-900 border-t border-teal-800 py-2 text-center text-sm text-gray-400" />
+            <Footer />
           </div>
         </div>
       </div>

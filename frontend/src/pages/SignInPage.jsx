@@ -68,13 +68,10 @@ const SignInPage = () => {
         password: values.password,
       });
 
+      const userData = response.data.user;
+
       showToast("success", response.data.message);
-      dispatch(
-        setUser({
-          email: values.email,
-          password: values.password,
-        })
-      );
+      dispatch(setUser(userData));
       navigate("/");
     } catch (error) {
       const message =

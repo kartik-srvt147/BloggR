@@ -76,7 +76,9 @@ const Navbar = () => {
             <DropdownMenuTrigger asChild>
               <Avatar>
                 <AvatarImage src={user.user.profilePic || defaultAvatar} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback className="text-red-500 text-lg font-bold">
+                  !
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
 
@@ -91,7 +93,7 @@ const Navbar = () => {
                 <DropdownMenuSeparator className="bg-teal-700" />
                 <DropdownMenuItem asChild>
                   <Link
-                    to=""
+                    to="/profile"
                     className="flex items-center gap-2 px-3 py-2 rounded-md transition hover:bg-gray-700"
                   >
                     <FaUser className="text-teal-400 size-4" />
