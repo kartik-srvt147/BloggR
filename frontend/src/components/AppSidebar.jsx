@@ -47,7 +47,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton className="hover:text-teal-400 hover:bg-gray-800 transition-colors">
                 <BiSolidCategory className="text-teal-400" />
-                <Link to="">Categories</Link>
+                <Link to="/categories">Categories</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
