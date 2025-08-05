@@ -16,6 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { axiosInstance } from "@/lib/axios";
+import { showToast } from "@/helpers/showToast";
 
 const formSchema = z.object({
   name: z.string().min(1, "Category name can't be empty"),
@@ -40,7 +42,22 @@ const AddCategory = () => {
     }
   }, [categoryName]);
 
-  async function onSubmit() {}
+  async function onSubmit(values) {
+    try {
+      const response = await axiosInstance.post("/category/add", {
+        name: values.name,
+        slug: values.slug,
+      });
+
+      showToast("success", response.data.message);
+      form.reset();
+    } catch (error) {
+      const message =
+        error.response.data.message ||
+        "Something went wrong. Please try again.";
+      showToast("error", message);
+    }
+  }
 
   return (
     <div className="flex items-center justify-center h-full">
