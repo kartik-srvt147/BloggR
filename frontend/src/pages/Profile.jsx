@@ -114,7 +114,7 @@ const Profile = () => {
                   className="relative group cursor-pointer"
                 >
                   <input {...getInputProps()} />
-                  <Avatar className="w-28 h-28">
+                  <Avatar className="w-28 h-28 border-4 border-teal-500">
                     <AvatarImage
                       src={
                         filePreview ||

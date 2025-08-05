@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -17,13 +16,37 @@ import { useFetch } from "@/hooks/useFetch";
 import Loader from "@/components/Loader";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { TbCategoryPlus } from "react-icons/tb";
+import { axiosInstance } from "@/lib/axios";
+import { showToast } from "@/helpers/showToast";
 
 const CategoryDetails = () => {
+  const [refreshData, setRefreshData] = useState(false);
   const {
     data: categoryData,
     loading,
     error,
-  } = useFetch(`/category/show-all-categories`, { method: "GET" });
+  } = useFetch(`/category/show-all-categories`, { method: "GET" }, [
+    refreshData,
+  ]);
+
+  const handleDelete = async (category_id) => {
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this category?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await axiosInstance.delete(`/category/delete/${category_id}`);
+      if (res) {
+        setRefreshData(!refreshData);
+        showToast("success", "Category deleted successfully.");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("error", err.response?.data?.message || "Delete failed");
+    }
+  };
 
   if (loading) return <Loader text="Fetching all categories..." />;
 
@@ -41,7 +64,7 @@ const CategoryDetails = () => {
           </h2>
           <Link to="/category/add">
             <Button className="bg-teal-600 hover:bg-teal-700 text-white cursor-pointer">
-              Add Category
+              <TbCategoryPlus /> Add Category
             </Button>
           </Link>
         </CardHeader>
@@ -60,7 +83,7 @@ const CategoryDetails = () => {
                 <TableHead className="font-bold text-md text-teal-500 tracking-wide">
                   Slug
                 </TableHead>
-                <TableHead className="text-right pr-6 font-bold text-md text-teal-500 tracking-wide">
+                <TableHead className="text-right pr-7 font-bold text-md text-teal-500 tracking-wide">
                   Actions
                 </TableHead>
               </TableRow>
@@ -86,7 +109,10 @@ const CategoryDetails = () => {
                         </Button>
                       </Link>
 
-                      <Button className="bg-gray-700 hover:bg-gray-800 px-3 py-2 cursor-pointer">
+                      <Button
+                        onClick={() => handleDelete(category._id)}
+                        className="bg-gray-700 hover:bg-gray-800 px-3 py-2 cursor-pointer"
+                      >
                         <MdDelete className="text-red-500 hover:text-red-400 transition-colors" />
                       </Button>
                     </TableCell>
