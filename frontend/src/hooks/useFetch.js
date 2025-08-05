@@ -1,6 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
-import { FaLeaf } from "react-icons/fa";
 
 export const useFetch = (url, options = {}, dependencies = []) => {
   const [data, setData] = useState();

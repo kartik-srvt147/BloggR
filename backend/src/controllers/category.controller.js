@@ -20,6 +20,8 @@ export const addCategory = async (req, res) => {
 
 export const showAllCategories = async (req, res) => {
   try {
+    const category = await Category.find().sort({ name: 1 }).lean().exec();
+    res.status(200).json({ category });
   } catch (error) {
     console.log("Error in showAllCategories controller", error.message);
     res.status(500).json({ message: "Internal server error" });
